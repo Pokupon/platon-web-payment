@@ -1,5 +1,4 @@
-require 'test/unit'
-require 'platon_web_payment'
+require File.expand_path('../helper', __FILE__)
 
 class RequestTest < Test::Unit::TestCase
 

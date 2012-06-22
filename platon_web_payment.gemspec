@@ -16,11 +16,15 @@ Gem::Specification.new do |s|
       'lib/platon_web_payment/version.rb',
       'lib/platon_web_payment/exception.rb',
       'lib/platon_web_payment/request.rb',
-      'lib/platon_web_payment/utils.rb'
+      'lib/platon_web_payment/utils.rb',
+      'lib/platon_web_payment/recurring_request.rb'
   ]
   s.test_files = [
-      'test/test_request.rb'
+      'test/helper.rb',
+      'test/test_request.rb',
+      'test/test_recurring_request.rb'
   ]
   s.require_paths = ['lib']
   s.add_dependency 'php_serialize', '1.1.3'
+  s.add_dependency 'httparty'
 end

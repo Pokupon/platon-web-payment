@@ -8,7 +8,7 @@ module PlatonWebPayment
     end
 
     def raise_required(variable, name)
-      raise Exception.new("#{name} is required") if variable.nil? || variable.empty?
+      raise Exception.new("#{name} is required") if variable.nil? || ( variable.respond_to?(:empty?) && variable.empty?)
     end
   end
 end
