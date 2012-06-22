@@ -1,9 +1,9 @@
-require 'digest/md5'
 require 'php_serialize'
 require 'base64'
 
 module PlatonWebPayment
   class Request
+    include Utils
 
     attr_accessor :client_key, :client_password, :request_url
     attr_accessor :order, :ext1, :ext2, :ext3, :ext4, :default_product_id
@@ -64,19 +64,15 @@ module PlatonWebPayment
       Base64.strict_encode64(PHP.serialize(data))
     end
 
-    def make_sign(*args)
-      Digest::MD5.hexdigest(args.reduce('') { |sum, arg| sum + (arg || '').reverse }.upcase).downcase
-    end
-
     def validate!
-      raise Exception.new('client key is required') if client_key.nil? || client_key.empty?
-      raise Exception.new('client password is required') if client_password.nil? || client_password.empty?
-      raise Exception.new('buyer ip is required') if buyer_ip.nil? || buyer_ip.empty?
-      raise Exception.new('at least one product is required') if @products.empty?
-      raise Exception.new('success url is required') if success_url.nil? || success_url.empty?
+      raise_required client_key, 'client key'
+      raise_required client_password, 'client password'
+      raise_required buyer_ip, 'buyer ip'
+      raise_required @products, 'at least one product'
+      raise_required success_url, 'success url'
 
       if @products.length > 1
-        raise Exception.new('default product id is required') if default_product_id.nil? || default_product_id.empty?
+        raise_required default_product_id, 'default product id'
         raise Exception.new('default product id is invalid') unless @products.index { |product| product[:id] == default_product_id }
       end
 

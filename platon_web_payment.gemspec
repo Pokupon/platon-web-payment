@@ -9,13 +9,14 @@ Gem::Specification.new do |s|
   s.description = 'Platon Web Payment Client'
   s.authors = ['Alexei Curguzchin']
   s.email = 'alexei.curguzchin@pokupon.ua'
-  s.homepage = 'https://github.com/organizations/Pokupon'
+  s.homepage = 'https://github.com/Pokupon/platon-web-payment'
 
   s.files = [
       'lib/platon_web_payment.rb',
       'lib/platon_web_payment/version.rb',
       'lib/platon_web_payment/exception.rb',
-      'lib/platon_web_payment/request.rb'
+      'lib/platon_web_payment/request.rb',
+      'lib/platon_web_payment/utils.rb'
   ]
   s.test_files = [
       'test/test_request.rb'
