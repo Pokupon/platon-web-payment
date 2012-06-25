@@ -22,9 +22,9 @@ Gem::Specification.new do |s|
   ]
   s.test_files = [
       'test/helper.rb',
-      'test/test_request.rb',
-      'test/test_recurring_request.rb',
-      'test/test_callback_response.rb'
+      'test/request_test.rb',
+      'test/recurring_request_test.rb',
+      'test/callback_response_test.rb'
   ]
   s.require_paths = ['lib']
   s.add_dependency 'php_serialize', '1.1.3'
