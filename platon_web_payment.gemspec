@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
       'lib/platon_web_payment/request.rb',
       'lib/platon_web_payment/utils.rb',
       'lib/platon_web_payment/recurring_request.rb',
-      'lib/platon_web_payment/callback_response.rb'
+      'lib/platon_web_payment/callback_response.rb',
+      'lib/php_serialize.rb'
   ]
   s.test_files = [
       'test/helper.rb',
@@ -27,6 +28,5 @@ Gem::Specification.new do |s|
       'test/callback_response_test.rb'
   ]
   s.require_paths = ['lib']
-  s.add_dependency 'php_serialize', '1.1.3'
   s.add_dependency 'httparty'
 end

@@ -1,4 +1,3 @@
-require 'php_serialize'
 require 'base64'
 
 module PlatonWebPayment
@@ -54,10 +53,10 @@ module PlatonWebPayment
       data = {}
       @products.each do |product|
         data[product[:id]] = {
-            'amount' => sprintf('%.2f', product[:amount]).encode('utf-8'),
-            'currency' => product[:currency].encode('utf-8'),
-            'name' => product[:name].encode('utf-8'),
-            'recurring' => ((product[:recurring]) ? 'init' : '').encode('utf-8')
+            'amount' => sprintf('%.2f', product[:amount]),
+            'currency' => product[:currency],
+            'name' => product[:name],
+            'recurring' => ((product[:recurring]) ? 'init' : '')
         }
       end
       data = data[data.keys.first] if data.length == 1
