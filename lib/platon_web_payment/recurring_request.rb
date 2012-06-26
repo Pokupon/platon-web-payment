@@ -6,6 +6,7 @@ module PlatonWebPayment
     attr_accessor :order, :amount, :description
     attr_accessor :rc_id, :rc_token
     attr_accessor :response
+    attr_reader :sign
 
     def execute
       validate!
@@ -19,7 +20,8 @@ module PlatonWebPayment
       params[:description] = description
       params[:rc_id] = rc_id
       params[:rc_token] = rc_token
-      params[:sign] = make_sign(client_key, amount_str, description, rc_id, rc_token, client_password)
+      @sign = make_sign(client_key, amount_str, description, rc_id, rc_token, client_password)
+      params[:sign] = sign
 
       response = HTTParty.post(recurring_url, :body => params)
       self.response = response.body
