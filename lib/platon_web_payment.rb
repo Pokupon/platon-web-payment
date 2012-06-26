@@ -4,7 +4,7 @@ require 'platon_web_payment/utils'
 require 'platon_web_payment/request'
 require 'platon_web_payment/recurring_request'
 require 'platon_web_payment/callback_response'
-require 'platon_web_payment/php_serialize'
+require 'php_serialize'
 
 module PlatonWebPayment
   CURRENCIES = ['UAH', 'USD', 'EUR']
