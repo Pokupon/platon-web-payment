@@ -3,10 +3,15 @@ module PlatonWebPayment
     include Utils
 
     attr_accessor :client_key, :client_password, :recurring_url
-    attr_accessor :order, :amount, :description
+    attr_accessor :order, :amount
+    attr_reader :description
     attr_accessor :rc_id, :rc_token
     attr_accessor :response
     attr_reader :sign
+
+    def description=(value)
+      @description = value[0, 30]
+    end
 
     def execute
       validate!
@@ -17,10 +22,10 @@ module PlatonWebPayment
       params[:key] = client_key
       params[:order] = order
       params[:amount] = amount_str
-      params[:description] = description[0, 30]
+      params[:description] = description
       params[:rc_id] = rc_id
       params[:rc_token] = rc_token
-      @sign = make_sign(client_key, amount_str, description[0, 30], rc_id, rc_token, client_password)
+      @sign = make_sign(client_key, amount_str, description, rc_id, rc_token, client_password)
       params[:sign] = sign
 
       response = HTTParty.post(recurring_url, :body => params)
