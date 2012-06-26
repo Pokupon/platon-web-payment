@@ -17,10 +17,10 @@ module PlatonWebPayment
       params[:key] = client_key
       params[:order] = order
       params[:amount] = amount_str
-      params[:description] = description
+      params[:description] = description[0, 30]
       params[:rc_id] = rc_id
       params[:rc_token] = rc_token
-      @sign = make_sign(client_key, amount_str, description, rc_id, rc_token, client_password)
+      @sign = make_sign(client_key, amount_str, description[0, 30], rc_id, rc_token, client_password)
       params[:sign] = sign
 
       response = HTTParty.post(recurring_url, :body => params)
