@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
       'lib/platon_web_payment/request.rb',
       'lib/platon_web_payment/utils.rb',
       'lib/platon_web_payment/recurring_request.rb',
+      'lib/platon_web_payment/cvv_recurring_request.rb',
       'lib/platon_web_payment/callback_response.rb',
       'lib/php_serialize.rb'
   ]
@@ -25,6 +26,7 @@ Gem::Specification.new do |s|
       'test/helper.rb',
       'test/request_test.rb',
       'test/recurring_request_test.rb',
+      'test/cvv_recurring_request_test.rb',
       'test/callback_response_test.rb'
   ]
   s.require_paths = ['lib']
