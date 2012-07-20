@@ -130,7 +130,7 @@ class RecurringRequestTest < Test::Unit::TestCase
 
     def request.execute
       validate!
-      @response = 'DECLINED'
+      @response = 'DECLINED: something wrong'
     end
 
     request.execute

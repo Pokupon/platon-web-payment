@@ -37,7 +37,7 @@ module PlatonWebPayment
     end
 
     def declined?
-      'DECLINED' == response
+      response =~ /^DECLINED/
     end
 
     def error?
