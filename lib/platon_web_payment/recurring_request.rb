@@ -10,7 +10,7 @@ module PlatonWebPayment
     attr_reader :sign
 
     def description=(value)
-      @description = Russian::transliterate(value)[0, 30]
+      @description = Russian::transliterate(value)[0, 30].strip
     end
 
     def execute
