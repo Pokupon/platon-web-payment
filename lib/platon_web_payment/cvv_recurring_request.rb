@@ -9,14 +9,18 @@ module PlatonWebPayment
     def params
       validate!
 
-      params = {}
+      params = { }
       params[:key] = client_key
       params[:order] = order
       params[:data] = make_data
       params[:rc_id] = rc_id
       params[:rc_token] = rc_token
       params[:url] = success_url
-      params[:sign] = make_sign(buyer_ip, client_key, params[:data], rc_id, rc_token, success_url, client_password)
+      if buyer_ip
+        params[:sign] = make_sign(buyer_ip, client_key, params[:data], rc_id, rc_token, success_url, client_password)
+      else
+        params[:sign] = make_sign(client_key, params[:data], rc_id, rc_token, success_url, client_password)
+      end
 
       params
     end
@@ -40,7 +44,6 @@ module PlatonWebPayment
       raise_required product_name, 'product name'
       raise_required product_amount, 'product amount'
       raise Exception.new('product amount must be numeric') unless product_amount.is_a? Numeric
-      raise_required buyer_ip, 'buyer ip'
     end
   end
 end

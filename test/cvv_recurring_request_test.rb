@@ -102,22 +102,6 @@ class CvvRequestTest < Test::Unit::TestCase
     assert_equal 'product amount must be numeric', exc.message
   end
 
-  def test_required_buyer_ip
-    request = PlatonWebPayment::CvvRecurringRequest.new
-    request.client_key = 'test'
-    request.client_password = 'pass'
-    request.success_url = 'http://success.url/'
-    request.rc_id = '11111111111'
-    request.rc_token = '2222222222'
-    request.product_name = 'product'
-    request.product_amount = 10
-
-    exc = assert_raise PlatonWebPayment::Exception do
-      request.params
-    end
-    assert_equal 'buyer ip is required', exc.message
-  end
-
   def test_valid_params
     request = PlatonWebPayment::CvvRecurringRequest.new
     request.client_key = 'test'
@@ -142,5 +126,21 @@ class CvvRequestTest < Test::Unit::TestCase
     assert_equal 'http://success.url/', params[:url]
     # calculated in php
     assert_equal 'e03a56897f08f91f959e79d7a26174a0', params[:sign]
+  end
+
+  def test_signature_without_buyer_ip
+    request = PlatonWebPayment::CvvRecurringRequest.new
+    request.client_key = 'test'
+    request.client_password = 'pass'
+    request.success_url = 'http://success.url/'
+    request.order = 'order-no'
+    request.rc_id = '11111111111'
+    request.rc_token = '2222222222'
+    request.product_name = 'nice product'
+    request.product_amount = 100.2
+
+    params = request.params
+    # calculated in php
+    assert_equal 'deb54bfaff273017f4157bb2296e5740', params[:sign]
   end
 end
