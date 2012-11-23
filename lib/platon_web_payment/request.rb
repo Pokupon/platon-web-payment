@@ -28,7 +28,7 @@ module PlatonWebPayment
 
       data = make_data
 
-      result = {}
+      result = { }
       result[:key] = client_key
       result[:order] = order if order
       result[:data] = data
@@ -38,10 +38,18 @@ module PlatonWebPayment
       result[:ext4] = ext4 if ext4
       result[:url] = success_url
       result[:error_url] = error_url if error_url
-      if @products.length > 1
-        result[:sign] = make_sign(buyer_ip, client_key, default_product_id, data, success_url, client_password)
+      if buyer_ip
+        if @products.length > 1
+          result[:sign] = make_sign(buyer_ip, client_key, default_product_id, data, success_url, client_password)
+        else
+          result[:sign] = make_sign(buyer_ip, client_key, data, success_url, client_password)
+        end
       else
-        result[:sign] = make_sign(buyer_ip, client_key, data, success_url, client_password)
+        if @products.length > 1
+          result[:sign] = make_sign(client_key, default_product_id, data, success_url, client_password)
+        else
+          result[:sign] = make_sign(client_key, data, success_url, client_password)
+        end
       end
 
       result
@@ -50,7 +58,7 @@ module PlatonWebPayment
     private
 
     def make_data
-      data = {}
+      data = { }
       @products.each do |product|
         data[product[:id]] = {
             'amount' => sprintf('%.2f', product[:amount]),
@@ -66,7 +74,6 @@ module PlatonWebPayment
     def validate!
       raise_required client_key, 'client key'
       raise_required client_password, 'client password'
-      raise_required buyer_ip, 'buyer ip'
       raise_required @products, 'at least one product'
       raise_required success_url, 'success url'
 

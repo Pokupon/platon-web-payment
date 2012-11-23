@@ -21,18 +21,6 @@ class RequestTest < Test::Unit::TestCase
     assert_equal 'client password is required', exc.message
   end
 
-  def test_required_buyer_ip
-    request = PlatonWebPayment::Request.new
-    request.client_key = 'test'
-    request.client_password = 'pass'
-
-
-    exc = assert_raise PlatonWebPayment::Exception do
-      request.params
-    end
-    assert_equal 'buyer ip is required', exc.message
-  end
-
   def test_required_products
     request = PlatonWebPayment::Request.new
     request.client_key = 'test'
@@ -138,5 +126,19 @@ class RequestTest < Test::Unit::TestCase
     assert_equal 'http://error.url/', params[:error_url]
     # calculated in php
     assert_equal 'ca451720133c8f955a0aca6e259e66d6', params[:sign]
+  end
+
+  def test_signature_without_buyer_ip
+    request = PlatonWebPayment::Request.new
+    request.client_key = 'test'
+    request.client_password = 'pass'
+    request.add_product nil, 'product name', 10.10, 'UAH', true
+    request.success_url = 'http://success.url/'
+    request.error_url = 'http://error.url/'
+    request.order = 'order-no'
+
+    params = request.params
+    # calculated in php
+    assert_equal 'bb10dbbf7a899c65cab8218f2a4ba920', params[:sign]
   end
 end
